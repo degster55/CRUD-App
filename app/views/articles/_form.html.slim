@@ -1,0 +1,16 @@
+= form_with model: @article do |form|
+  div
+    = form.label :title
+    br
+    = form.text_field :title
+  div
+    = form.label :body
+    br
+    = form.text_field :body
+  div
+    = form.label :author
+    br
+    = form.text_field :author
+  div
+    = form.submit
+    br
