@@ -4,5 +4,5 @@ hr
 - @articles.each do |article|
   p= link_to article.title, article_path(article)
   small
-    i #{article.author}, #{article.created_at.strftime("%H:%m %d.%m.%Y")}
+    i #{article.created_at.strftime("%H:%m %d.%m.%Y")}
   hr

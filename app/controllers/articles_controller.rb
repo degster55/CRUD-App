@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.order(created_at: :desc)
+    @articles = Article.published.by_creation_date_desc
+    # @articles = Article.order(created_at: :desc)
   end
 
   def new
@@ -8,17 +9,19 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    @author = Author.create(author_params)
     @article = Article.new(article_params)
+    @article.author_id = @author.id
 
     if @article.save
       redirect_to article_path(@article)
     else 
-      render :new
+      render 'new'
     end
   end
 
   def show
-    @article = Article.find(params[:id])
+    @article = Article.published.find(params[:id])
   end
 
   def edit
@@ -47,6 +50,10 @@ class ArticlesController < ApplicationController
   private 
 
   def article_params
-    params.require(:article).permit(:title, :body, :author)
+    params.require(:article).permit(:body, :published, :title)
+  end
+
+  def author_params
+    params.require(:article).require(:author).permit(:name)
   end
 end
